@@ -7,27 +7,36 @@
 - 向 Cherry Studio 注入自定义 JavaScript 脚本
 - 可生成独立的可执行文件，无需 Python 环境
 
-## 安装要求
+## 快速使用
+
+### 可执行文件方式运行（推荐）
+1. 下载 `CherryStudio_scripted.exe`。
+2. 创建 `config.yaml` 文件，确保 `config.yaml` 文件与可执行文件位于同一目录
+3. 修改 `config.yaml`内容：
+```yaml
+app_path: path/to/cherrystudio.exe （改成cherry的exe路径）
+scripts_folder: /path/to/your/scripts（改成你的js插件脚本存放文件夹）
+```   
+4. 双击运行 `CherryStudio_scripted.exe`即可
+5. 可创建快捷方式， 并将其作为默认的CherryStudio应用入口。即可默认使用带有插件的Cherry Studio。
 
 ### Python 方式运行
 
-- Python 3.6+
-- 依赖包：
-  - websocket-client
-  - requests
-  - psutil
-  - pyyaml
-
-安装依赖：
+1. 安装依赖：
 ```bash
 pip install -r requirements.txt
 # 或者
 pip install websocket-client requests psutil pyyaml
 ```
-
-### 可执行文件方式运行
-
-无需安装 Python 环境，直接下载并运行 `.exe` 文件即可。
+2. 修改 `config.yaml` 文件，设置 Cherry Studio 的安装路径
+```yaml
+app_path: path/to/cherrystudio.exe
+scripts_folder: /path/to/your/scripts
+```
+3. 运行：
+   ```bash
+   python start_CherryStudio_with_scripts.py
+   ```
 
 ## 配置文件说明
 
@@ -51,21 +60,6 @@ scripts_folder: ./scripts
 
 您可以根据需要修改这些脚本或添加新的脚本。
 
-## 使用方法
-
-### Python 方式运行
-
-1. 确保已安装所有依赖包
-2. 修改 `config.yaml` 文件，设置 Cherry Studio 的安装路径
-3. 运行：
-   ```bash
-   python start_CherryStudio_with_scripts.py
-   ```
-
-### 可执行文件方式运行
-
-1. 确保 `config.yaml` 文件与可执行文件位于同一目录
-2. 双击运行 `CherryStudio_scripted.exe`即可（可创建快捷方式， 并将其作为默认的CherryStudio应用入口）
 
 ## 生成可执行文件
 
