@@ -1,77 +1,100 @@
-# 💉 electron-inject
+# Electron-Inject for Cherry Studio
 
-You find yourself locked out of closed source electron applications with no easy way to enable developer tools? ↷ *electron-inject* is here to help 👲
+这是一个基于 [electron-inject](https://github.com/tintinweb/electron-inject) 的工具，专为 Cherry Studio 应用程序定制，允许您向 Cherry Studio 注入自定义 JavaScript 代码，以增强其功能和用户体验。
 
+## 功能特点
 
-*electron-inject* is an application wrapper that utilizes the remote debug console to inject javascript code into electron based applications. For example, this can be pretty handy to enable otherwise unavailable features like the built-in developer console.
+- 向 Cherry Studio 注入自定义 JavaScript 脚本
+- 支持多种 UI 增强功能（暗黑模式、缩放控制等）
+- 自定义快捷键和功能
+- 可生成独立的可执行文件，无需 Python 环境
 
-![slack](https://cloud.githubusercontent.com/assets/2865694/24376228/70b2c2b0-133b-11e7-893c-c7a0ad262343.gif)
+## 安装要求
 
+### Python 方式运行
 
-# install
+- Python 3.6+
+- 依赖包：
+  - websocket-client
+  - requests
+  - psutil
+  - pyyaml
 
-    $ pip install electron-inject
-    
-or 
+安装依赖：
+```bash
+pip install -r requirements.txt
+# 或者
+pip install websocket-client requests psutil pyyaml
+```
 
-    $ python setup.py install
-    
-# usage
+### 可执行文件方式运行
 
-    $ python -m electron_inject --help
-    Usage:
-        usage:
-               electron_inject [options] - <electron application>
+无需安装 Python 环境，直接下载并运行 `.exe` 文件即可。
 
-        example:
-               electron_inject --enable-devtools-hotkeys - /path/to/electron/powered/application [--app-params app-args]
+## 配置文件说明
 
+项目使用 `config.yaml` 进行配置，主要包含 Cherry Studio 的安装路径：
 
-    Options:
-      -h, --help            show this help message and exit
-      -d, --enable-devtools-hotkeys
-                            Enable Hotkeys F12 (Toggle Developer Tools) and F5
-                            (Refresh) [default: False]
-      -b, --browser         Launch Devtools in default browser. [default: False]
-      -t TIMEOUT, --timeout=TIMEOUT
-                            Try hard to inject for the time specified [default:
-                            none]
-      -r RENDER_SCRIPTS, --render-script=RENDER_SCRIPTS
-                            Add a script to be injected into each window (render
-                            thread)
+```yaml
+app_path: C:\Users\10051\AppData\Local\Programs\Cherry Studio\Cherry Studio.exe
+scripts_folder: ./scripts
+```
 
-# Showcase
+请确保将路径更改为您计算机上 Cherry Studio 的实际安装位置。scripts_folder请更改为脚本文件存放位置。
 
-Inject hotkeys *F12:toggle devconsole* and *F5:reload* into closed source apps with devconsole disabled.
+## 示例脚本说明
 
-`--enable-devtools-hotkeys` .. enable developer hotkeys
-`--timeout=xx` .. patch all known remote webContent/windows in a timeframe of `xx` seconds. set this to an arbitrary high value to make sure we're patching all future windows.
+项目在 `scripts` 目录下包含多个 JavaScript 示例脚本，用于增强 Cherry Studio 的功能：
 
-## whatsapp
+- `ui-enhancements.js`: UI 增强功能，如暗黑模式和页面缩放控制
+- `custom-shortcuts.js`: 自定义快捷键功能
+- `focus-shortcut.js`: 专注模式相关功能
 
-`$ python -m electron_inject -d -t 60 - \\PATH\TO\Local\WhatsApp\app-0.2.2244\WhatsApp.exe`
+您可以根据需要修改这些脚本或添加新的脚本。
 
-![whatsapp gif](https://cloud.githubusercontent.com/assets/2865694/24376256/81d44e88-133b-11e7-961f-060e7b8201ed.gif)
+## 使用方法
 
-If this gives you an error try launching it with the alternative browser method:
+### Python 方式运行
 
-`$ python -m electron_inject --browser - \PATH\TO\Local\WhatsApp\app-0.2.2244\WhatsApp.exe`
+1. 确保已安装所有依赖包
+2. 修改 `config.yaml` 文件，设置 Cherry Studio 的安装路径
+3. 运行：
+   ```bash
+   python start_CherryStudio_with_scripts.py
+   ```
 
-## slack
+### 可执行文件方式运行
 
-`$ python -m electron_inject -d -t 60 - \\PATH\TO\Local\slack\app-2.5.2\slack.exe`
+1. 确保 `config.yaml` 文件与可执行文件位于同一目录
+2. 双击运行 `CherryStudio_scripted.exe`即可（可创建框架方式， 并将其作为默认的CherryStudio应用入口）
 
-![slack](https://cloud.githubusercontent.com/assets/2865694/24376228/70b2c2b0-133b-11e7-893c-c7a0ad262343.gif)
+## 生成可执行文件
 
-# Render Scripts
+如需生成可执行文件，请按以下步骤操作：
 
-Passing the -r file parameter allows to pass a list of scripts to be injected into the render thread. It does not follow imports, just evaluate the text
+1. 安装 PyInstaller：
+   ```bash
+   pip install pyinstaller
+   ```
 
-`python -m electron_inject -r ./test.js -r ~/test2.js -r /usr/bin/test3.js - /opt/electron-api-demos/Electron\ API\ Demos`
+2. 运行以下命令生成可执行文件：
+   ```bash
+   pyinstaller start_CherryStudio_with_scripts.spec --distpath ./  
+   
+   ```
 
-# Acknowledgments
+3. 生成的可执行文件位于 `dist` 目录中
 
-- [NathanPB](https://github.com/NathanPB) - #7
+## 注意事项
 
+- 确保配置文件 `config.yaml` 中的路径正确
+- 如修改脚本后需要重新生成可执行文件
+- 本工具仅适用于 Cherry Studio 应用程序
 
+## 许可证
 
+本项目基于 MIT 许可证，详情请参阅 [LICENSE](LICENSE) 文件。
+
+## 致谢
+
+本项目基于 [tintinweb/electron-inject](https://github.com/tintinweb/electron-inject) 修改而来。
