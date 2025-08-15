@@ -1,4 +1,4 @@
-# Electron-Inject for Cherry Studio
+# Cherry Studio with js plugins
 
 这是一个基于 [electron-inject](https://github.com/tintinweb/electron-inject) 的工具，专为 Cherry Studio 应用程序定制，允许您向 Cherry Studio 注入自定义 JavaScript 代码，以增强其功能和用户体验。
 
@@ -96,4 +96,4 @@ scripts_folder: ./scripts
 
 ## 致谢
 
-本项目基于 [tintinweb/electron-inject](https://github.com/tintinweb/electron-inject) 修改而来。
+本项目基于 [tintinweb/electron-inject](https://github.com/tintinweb/electron-inject)。
