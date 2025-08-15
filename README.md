@@ -44,9 +44,10 @@ scripts_folder: ./scripts
 
 项目在 `scripts` 目录下包含多个 JavaScript 示例脚本，用于增强 Cherry Studio 的功能：
 
-- `ui-enhancements.js`: UI 增强功能，如暗黑模式和页面缩放控制
-- `custom-shortcuts.js`: 自定义快捷键功能
-- `focus-shortcut.js`: 专注模式相关功能
+- `focus-textinputarea-shortcut.js`: 注册一个快捷键ctrl + I, 用于聚焦输入框，方便输入文字和模型交流。
+- 'switch-model-shortcut': 注册一个快捷键ctrl + shft + M, 用于点击模型切换栏，方便切换模型。
+
+通过注入这两个脚本，配合cherry原生的快捷键，大多数聊天场景都可使用纯键盘进行操作、切换，大大提高效率。
 
 您可以根据需要修改这些脚本或添加新的脚本。
 
