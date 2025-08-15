@@ -64,7 +64,7 @@ scripts_folder: ./scripts
 ### 可执行文件方式运行
 
 1. 确保 `config.yaml` 文件与可执行文件位于同一目录
-2. 双击运行 `CherryStudio_scripted.exe`即可（可创建框架方式， 并将其作为默认的CherryStudio应用入口）
+2. 双击运行 `CherryStudio_scripted.exe`即可（可创建快捷方式， 并将其作为默认的CherryStudio应用入口）
 
 ## 生成可执行文件
 
