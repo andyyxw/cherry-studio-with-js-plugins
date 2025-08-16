@@ -73,11 +73,7 @@ scripts_folder: ./scripts
 2. 运行以下命令生成可执行文件：
    ```bash
    pyinstaller start_CherryStudio_with_scripts.spec --distpath ./  
-   
    ```
-
-3. 生成的可执行文件位于 `dist` 目录中
-
 ## 注意事项
 
 - 确保配置文件 `config.yaml` 中的路径正确
