@@ -282,7 +282,7 @@ class ElectronRemoteDebugger(object):
                     pass
             raise Exception(f"调试端口 {port} 在60秒内未变为可用")
 
-        return cls("localhost", port=port)
+        return cls("localhost", port=port), p
 
     @staticmethod
     def kill_all_by_name(app_name):
@@ -330,7 +330,7 @@ def inject(target, devtools=False, browser=False, timeout=None, scripts=None, po
             logger.error(f"无法读取脚本文件 {name}: {e}")
             del scripts[name]
 
-    erb = ElectronRemoteDebugger.execute(target, port, kill_existing=kill_existing)
+    erb, process = ElectronRemoteDebugger.execute(target, port, kill_existing=kill_existing)
 
     windows_visited = set()
     injection_success = False
@@ -381,6 +381,9 @@ def inject(target, devtools=False, browser=False, timeout=None, scripts=None, po
 
     if browser:
         launch_url("http://%(host)s:%(port)s/" % erb.params)
+        
+    # 返回进程对象
+    return process
 
 
 if __name__ == "__main__":
