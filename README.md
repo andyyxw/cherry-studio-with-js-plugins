@@ -1,4 +1,6 @@
 # Cherry Studio with js plugins
+> 如果该项目对你有用，欢迎fork & star🌟！
+
 
 这是一个基于 [electron-inject](https://github.com/tintinweb/electron-inject) 的工具，专为 Cherry Studio 应用程序定制，允许您向 Cherry Studio 注入自定义 JavaScript 代码，以增强其功能和用户体验。
 
@@ -6,7 +8,8 @@
 
 - 向 Cherry Studio 注入自定义 JavaScript 脚本
 - 可生成独立的可执行文件，无需 Python 环境
-
+- 独立于CherryStudio本体，本体可随意进行升级/降级等操作
+  
 ## 快速使用
 
 ### 可执行文件方式运行（推荐）
@@ -14,7 +17,7 @@
 2. 创建 `config.yaml` 文件，确保 `config.yaml` 文件与可执行文件位于同一目录
 3. 修改 `config.yaml`内容：
 ```yaml
-app_path: path/to/cherrystudio.exe （改成cherry的exe路径）
+app_path: path/to/cherrystudio.exe （改成系统原有的cherry的exe路径）
 scripts_folder: /path/to/your/scripts（改成你的js插件脚本存放文件夹）
 ```   
 4. 双击运行 `CherryStudio_scripted.exe`即可
