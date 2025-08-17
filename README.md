@@ -8,7 +8,8 @@
 
 - 向 Cherry Studio 注入自定义 JavaScript 脚本
 - 可生成独立的可执行文件，无需 Python 环境
-
+- 独立于CherryStudio本体，本体可随意进行升级/降级等操作
+  
 ## 快速使用
 
 ### 可执行文件方式运行（推荐）
