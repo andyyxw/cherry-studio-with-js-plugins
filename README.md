@@ -16,7 +16,7 @@
 2. 创建 `config.yaml` 文件，确保 `config.yaml` 文件与可执行文件位于同一目录
 3. 修改 `config.yaml`内容：
 ```yaml
-app_path: path/to/cherrystudio.exe （改成cherry的exe路径）
+app_path: path/to/cherrystudio.exe （改成系统原有的cherry的exe路径）
 scripts_folder: /path/to/your/scripts（改成你的js插件脚本存放文件夹）
 ```   
 4. 双击运行 `CherryStudio_scripted.exe`即可
