@@ -8,7 +8,13 @@ document.addEventListener('keydown', function(event) {
         
         event.preventDefault();
         
-        const input = document.querySelector('[placeholder="在这里输入消息，按 Enter 发送..."]');
+        const inputbar = document.getElementById('inputbar');
+        if (!inputbar) {
+            console.log('非聊天页面，焦点快捷键未激活');
+            return;
+        }
+        
+        const input = inputbar.querySelector('textarea');
         
         if (input) {
             input.focus();

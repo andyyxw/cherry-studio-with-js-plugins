@@ -5,25 +5,32 @@ document.addEventListener('keydown', function(event) {
         
         event.preventDefault();
         
-        // 定位到所有 MessageFooter 元素
-        const messageFooters = document.querySelectorAll('.MessageFooter');
+        // 检查是否在聊天页面
+        const inputbar = document.getElementById('inputbar');
+        if (!inputbar) {
+            console.log('非聊天页面，删除消息快捷键未激活');
+            return;
+        }
+        
+        // 定位到所有消息容器元素
+        const messageContainers = document.querySelectorAll('.message-container');
         
         // 查找页面中最底部的 MessageFooter（按视觉位置）
         let bottomMostFooter = null;
         let maxBottom = -1;
         
-        messageFooters.forEach((footer) => {
-            const rect = footer.getBoundingClientRect();
+        messageContainers.forEach((container) => {
+            const rect = container.getBoundingClientRect();
             
             if (rect.bottom > maxBottom && rect.bottom <= window.innerHeight) {
                 maxBottom = rect.bottom;
-                bottomMostFooter = footer;
+                bottomMostFooter = container;
             }
         });
         
         // 如果没找到在视口内的，就选择最后一个
-        if (!bottomMostFooter && messageFooters.length > 0) {
-            bottomMostFooter = messageFooters[messageFooters.length - 1];
+        if (!bottomMostFooter && messageContainers.length > 0) {
+            bottomMostFooter = messageContainers[messageContainers.length - 1];
         }
         
         if (bottomMostFooter) {
