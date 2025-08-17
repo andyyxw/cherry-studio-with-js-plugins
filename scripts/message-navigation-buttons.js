@@ -1,8 +1,33 @@
 // 消息导航按钮
 (function() {
-  // 等待DOM加载完成
-  function initNavigationButtons() {
+  let isInitialized = false;
+  let chatPageObserver = null;
+  // 检查是否为聊天页面
+  function isChatPage() {
+    return document.querySelectorAll('.MessageFooter').length > 0;
+  }
+
+  // 显示或隐藏导航按钮
+  function toggleNavigationButtons() {
+    const container = document.getElementById('message-navigation-container');
     
+    if (isChatPage()) {
+      // 聊天页面：显示或创建按钮
+      if (!container) {
+        createNavigationButtons();
+      } else {
+        container.style.display = 'flex';
+      }
+    } else {
+      // 非聊天页面：隐藏按钮
+      if (container) {
+        container.style.display = 'none';
+      }
+    }
+  }
+  
+  // 创建导航按钮
+  function createNavigationButtons() {
     // 检查是否已经添加过按钮
     if (document.getElementById('message-navigation-container')) {
       return;
@@ -11,8 +36,6 @@
     // 查找content-container元素
     const contentContainer = document.getElementById('content-container');
     if (!contentContainer) {
-      // 如果没找到，稍后再尝试
-      setTimeout(initNavigationButtons, 1000);
       return;
     }
 
@@ -184,20 +207,70 @@
     // 这里可以添加防抖动逻辑，避免频繁计算
   }, { passive: true });
 
-  // 尝试初始化按钮
-  setTimeout(initNavigationButtons, 1000);
+  // 设置主要观察器来监听页面变化
+  function setupMainObserver() {
+    // 监听DOM变化，检测页面状态变化
+    const observer = new MutationObserver(function(mutations) {
+      // 检查是否有MessageFooter的添加或移除
+      const shouldCheck = mutations.some(mutation => {
+        // 检查新添加的节点
+        if (mutation.addedNodes.length) {
+          for (const node of mutation.addedNodes) {
+            if (node.nodeType === 1) { // 元素节点
+              if (node.classList && node.classList.contains('MessageFooter') ||
+                  node.querySelector && node.querySelector('.MessageFooter')) {
+                return true;
+              }
+            }
+          }
+        }
+        
+        // 检查被移除的节点
+        if (mutation.removedNodes.length) {
+          for (const node of mutation.removedNodes) {
+            if (node.nodeType === 1) { // 元素节点
+              if (node.classList && node.classList.contains('MessageFooter') ||
+                  node.querySelector && node.querySelector('.MessageFooter')) {
+                return true;
+              }
+            }
+          }
+        }
+        
+        return false;
+      });
+      
+      // 只在需要时才执行切换逻辑
+      if (shouldCheck) {
+        toggleNavigationButtons();
+      }
+    });
+    
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: false
+    });
+    
+    return observer;
+  }
 
-  // 监听DOM变化，确保在动态加载内容后仍能初始化按钮
-  const observer = new MutationObserver(function() {
-    if (!document.getElementById('message-navigation-container')) {
-      initNavigationButtons();
-    }
-  });
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
+  // 初始化
+  function init() {
+    // 创建按钮并根据页面状态显示/隐藏
+    toggleNavigationButtons();
+    
+    // 设置页面变化观察器
+    chatPageObserver = setupMainObserver();
+    
+    // 标记为已初始化
+    isInitialized = true;
+  }
 
-  // 初始尝试初始化
-  initNavigationButtons();
+  // 当DOM加载完成后初始化
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
