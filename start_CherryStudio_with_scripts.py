@@ -13,7 +13,7 @@ scripts_folder = config["scripts_folder"]
 if __name__ == "__main__":
     app_path = CherryStudio_path
     # get js from scripts/
-    js_list = [os.path.join(scripts_folder, file) for file in os.listdir(scripts_folder)]
+    js_list = [os.path.join(scripts_folder, file) for file in os.listdir(scripts_folder) if file.endswith(".js")]
     
     electron_process = None  # 初始化变量
     try:
