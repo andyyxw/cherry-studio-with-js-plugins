@@ -4,7 +4,7 @@
   let chatPageObserver = null;
   // 检查是否为聊天页面
   function isChatPage() {
-    return document.getElementById('inputbar') !== null;
+    return document.querySelectorAll('.MessageFooter').length > 0;
   }
 
   // 显示或隐藏导航按钮
@@ -123,17 +123,16 @@
     document.body.appendChild(navigationContainer);
   }
 
-  // 获取所有消息（通过消息容器元素来定位）
+  // 获取所有消息（通过MessageFooter来定位）
   function getAllMessages() {
-    // 使用与消息相关的容器元素选择器
-    const messageContainers = document.querySelectorAll('.message-container');
+    const messageFooters = document.querySelectorAll('.MessageFooter');
     const messages = [];
 
-    // 为每个消息容器获取位置信息
-    messageContainers.forEach((container) => {
-      const rect = container.getBoundingClientRect();
+    // 为每个MessageFooter获取位置信息
+    messageFooters.forEach((footer) => {
+      const rect = footer.getBoundingClientRect();
       messages.push({
-        element: container,
+        element: footer,
         top: rect.top,
         bottom: rect.bottom,
         visible: rect.top >= 0 && rect.bottom <= window.innerHeight
@@ -212,14 +211,14 @@
   function setupMainObserver() {
     // 监听DOM变化，检测页面状态变化
     const observer = new MutationObserver(function(mutations) {
-      // 检查是否有inputbar的添加或移除
+      // 检查是否有MessageFooter的添加或移除
       const shouldCheck = mutations.some(mutation => {
         // 检查新添加的节点
         if (mutation.addedNodes.length) {
           for (const node of mutation.addedNodes) {
             if (node.nodeType === 1) { // 元素节点
-              if (node.id === 'inputbar' ||
-                  node.querySelector && node.querySelector('#inputbar')) {
+              if (node.classList && node.classList.contains('MessageFooter') ||
+                  node.querySelector && node.querySelector('.MessageFooter')) {
                 return true;
               }
             }
@@ -230,8 +229,8 @@
         if (mutation.removedNodes.length) {
           for (const node of mutation.removedNodes) {
             if (node.nodeType === 1) { // 元素节点
-              if (node.id === 'inputbar' ||
-                  node.querySelector && node.querySelector('#inputbar')) {
+              if (node.classList && node.classList.contains('MessageFooter') ||
+                  node.querySelector && node.querySelector('.MessageFooter')) {
                 return true;
               }
             }
