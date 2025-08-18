@@ -8,21 +8,10 @@ document.addEventListener('keydown', function(event) {
         // 定位到所有 MessageFooter 元素
         const messageFooters = document.querySelectorAll('.MessageFooter');
         
-        // 查找页面中最底部的 MessageFooter（按视觉位置）
+        // 直接选择最后一个MessageFooter（真正的最后一条消息）
         let bottomMostFooter = null;
-        let maxBottom = -1;
         
-        messageFooters.forEach((footer) => {
-            const rect = footer.getBoundingClientRect();
-            
-            if (rect.bottom > maxBottom && rect.bottom <= window.innerHeight) {
-                maxBottom = rect.bottom;
-                bottomMostFooter = footer;
-            }
-        });
-        
-        // 如果没找到在视口内的，就选择最后一个
-        if (!bottomMostFooter && messageFooters.length > 0) {
+        if (messageFooters.length > 0) {
             bottomMostFooter = messageFooters[messageFooters.length - 1];
         }
         
