@@ -24,4 +24,15 @@ document.addEventListener('keydown', function(event) {
         };
         document.querySelector('[class^=SettingContent-] [class^=ProviderListContainer-] [class^=AddButtonWrapper-]:first-of-type input')?.focus();
     }
+
+    // 监听 Ctrl+M，打开模型管理
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'm') {
+        event.preventDefault();
+
+        if (!document.querySelector('a[class^=MenuItemLink-]:has(> li[class^="MenuItem-"].active)')?.href?.endsWith('#/settings/provider')) {
+            console.log('非模型服务页面，【Ctrl+M】快捷键未激活');
+            return;
+        };
+        document.querySelector('[class^=SettingContent-] [class^=SettingContainer-] > :last-child > button:first-child')?.click();
+    }
 });
